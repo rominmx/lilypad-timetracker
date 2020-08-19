@@ -2,6 +2,10 @@ const addTask = (state, task) => {
   state.tasks.push(task);
 };
 
+const addTasks = (state, tasks) => {
+  state.tasks = [...tasks];
+};
+
 const deleteTask = (state, id) => {
   state.tasks = state.tasks.filter((task) => task.id !== id);
 };
@@ -20,6 +24,7 @@ const editTask = (state, task) => {
 
 export default {
   addTask,
+  addTasks,
   deleteTask,
   editTask,
 };
