@@ -12,16 +12,27 @@
           Add Task
         </button>
       </div>
+      <div>
+        <label>Priority</label>
+        <div v-for="key in priorites.keys()" :key="key">
+          <input type="radio" v-model="priority" :value="key" :id="`priority_${key}`" />
+          <label :for="`priority_${key}`">{{ priorites.get(key) }}</label>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import { PRIORITIES_MAP, DEFAULT_PRIORITY } from '../store/constants';
+
 export default {
   data() {
     return {
       taskIsAdding: false,
       taskName: '',
+      priority: DEFAULT_PRIORITY,
+      priorites: PRIORITIES_MAP,
     };
   },
   methods: {
@@ -33,7 +44,10 @@ export default {
       this.taskName = '';
     },
     addTask() {
-      this.$emit('addTask', this.taskName);
+      this.$emit('addTask', {
+        title: this.taskName,
+        priority: this.priority,
+      });
       this.closeUI();
     },
   },

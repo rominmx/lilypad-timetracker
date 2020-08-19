@@ -7,6 +7,7 @@
           <th>#</th>
           <th>Task</th>
           <th>Status</th>
+          <th>Priority</th>
           <th>Delete</th>
         </tr>
       </thead>
@@ -15,6 +16,7 @@
           <td>{{ index + 1 }}</td>
           <td>{{ task.title }}</td>
           <td>{{ task.status }}</td>
+          <td>{{ task.priority | getPriority }}</td>
           <td>
             <button @click="$emit('deleteTask', task.id)">Delete</button>
           </td>
@@ -25,7 +27,14 @@
 </template>
 
 <script>
+import { PRIORITIES_MAP } from '@/store/constants';
+
 export default {
+  filters: {
+    getPriority(value) {
+      return PRIORITIES_MAP.get(value);
+    },
+  },
   props: {
     tasks: {
       type: Array,
