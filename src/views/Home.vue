@@ -1,18 +1,28 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <h1>Tasks</h1>
+    <tasks-list :tasks="tasks" @deleteTask="deleteTask" />
+    <add-task @addTask="addTask" />
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue';
+import { mapState, mapActions, mapMutations } from 'vuex';
+import TasksList from '../components/Tasks.vue';
+import AddTask from '../components/AddTask.vue';
 
 export default {
   name: 'Home',
   components: {
-    HelloWorld,
+    AddTask,
+    TasksList,
+  },
+  computed: {
+    ...mapState(['tasks']),
+  },
+  methods: {
+    ...mapActions(['addTask']),
+    ...mapMutations(['deleteTask']),
   },
 };
 </script>
