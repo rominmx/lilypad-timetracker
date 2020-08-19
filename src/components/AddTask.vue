@@ -42,6 +42,7 @@ export default {
     closeUI() {
       this.displayUI(false);
       this.taskName = '';
+      this.priority = DEFAULT_PRIORITY;
     },
     addTask() {
       this.$emit('addTask', {
