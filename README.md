@@ -3,11 +3,15 @@
 Lightweight timetracker for your daily tasks
 
 ## TODOs
-* Add local storage support
+* Start/pause/stop operations
+* Add TimeCounter component
 * Add 'original estimate' & 'time spent' fields to tasks
 * Add task by 'enter' key code
-* Display current data & time
+* Display current date & time
 * Confirmation dialog between delete
-* Start/pause/stop operations
 * Add tasks categories
 * Add task edit dialog
+* Add sorting to the tasks table
+* Add i18n support
+* Archive tasks
+* Copy selected tasks from previous day

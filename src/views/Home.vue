@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Tasks</h1>
-    <tasks-list :tasks="tasks" @deleteTask="deleteTask" />
+    <tasks-list :tasks="tasks" @deleteTask="deleteTask" @clearAll="clearAll" />
     <add-task @addTask="addTask" />
   </div>
 </template>
@@ -39,6 +39,10 @@ export default {
     },
     deleteTask(params) {
       this.$store.commit('deleteTask', params);
+      this.saveTasks();
+    },
+    clearAll() {
+      this.$store.commit('setTasks', []);
       this.saveTasks();
     },
   },

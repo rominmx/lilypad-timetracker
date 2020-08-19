@@ -1,28 +1,31 @@
 <template>
   <div>
     <div v-if="!tasks.length">No tasks yet</div>
-    <table v-else :class="$style.table">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Task</th>
-          <th>Status</th>
-          <th>Priority</th>
-          <th>Delete</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(task, index) in tasks" :key="task.id">
-          <td>{{ index + 1 }}</td>
-          <td>{{ task.title }}</td>
-          <td>{{ task.status }}</td>
-          <td>{{ task.priority | getPriority }}</td>
-          <td>
-            <button @click="$emit('deleteTask', task.id)">Delete</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div v-else>
+      <table :class="$style.table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Task</th>
+            <th>Status</th>
+            <th>Priority</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(task, index) in tasks" :key="task.id">
+            <td>{{ index + 1 }}</td>
+            <td>{{ task.title }}</td>
+            <td>{{ task.status }}</td>
+            <td>{{ task.priority | getPriority }}</td>
+            <td>
+              <button @click="$emit('deleteTask', task.id)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <button @click="$emit('clearAll')">Clear All Tasks</button>
+    </div>
   </div>
 </template>
 

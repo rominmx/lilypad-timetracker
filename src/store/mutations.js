@@ -2,7 +2,7 @@ const addTask = (state, task) => {
   state.tasks.push(task);
 };
 
-const addTasks = (state, tasks) => {
+const setTasks = (state, tasks) => {
   state.tasks = [...tasks];
 };
 
@@ -24,7 +24,7 @@ const editTask = (state, task) => {
 
 export default {
   addTask,
-  addTasks,
+  setTasks,
   deleteTask,
   editTask,
 };

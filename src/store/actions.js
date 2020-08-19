@@ -27,7 +27,7 @@ const addTasks = ({ commit }, tasks) => {
       ...task,
     }));
 
-  commit('addTasks', validatedTasks);
+  commit('setTasks', validatedTasks);
 };
 
 export default {
