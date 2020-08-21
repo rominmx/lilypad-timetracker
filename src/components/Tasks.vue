@@ -7,6 +7,8 @@
           <tr>
             <th>#</th>
             <th>Task</th>
+            <th>Actions</th>
+            <th>Time</th>
             <th>Status</th>
             <th>Priority</th>
             <th>Delete</th>
@@ -16,6 +18,16 @@
           <tr v-for="(task, index) in tasks" :key="task.id">
             <td>{{ index + 1 }}</td>
             <td>{{ task.title }}</td>
+            <td>
+              <button
+                @click="
+                  $emit('startTask', { id: task.id, title: task.title, totalTime: task.totalTime })
+                "
+              >
+                Start
+              </button>
+            </td>
+            <td>{{ task.totalTime | formatTime }}</td>
             <td>{{ task.status }}</td>
             <td>{{ task.priority | getPriority }}</td>
             <td>
@@ -31,12 +43,14 @@
 
 <script>
 import { PRIORITIES_MAP } from '@/store/constants';
+import { formatTime } from '@/utils/time';
 
 export default {
   filters: {
     getPriority(value) {
       return PRIORITIES_MAP.get(value);
     },
+    formatTime,
   },
   props: {
     tasks: {

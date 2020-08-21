@@ -1,4 +1,4 @@
-import { DEFAULT_TASK_VALUES } from './constants';
+import { DEFAULT_TASK_VALUES, RUNNING, PAUSED } from './constants';
 
 const addTask = ({ commit }, { title, priority }) => {
   const id = new Date().getTime();
@@ -30,7 +30,29 @@ const addTasks = ({ commit }, tasks) => {
   commit('setTasks', validatedTasks);
 };
 
+const startTask = ({ commit }, { id, startTime }) => {
+  commit('editTask', {
+    id,
+    startTime,
+    status: RUNNING,
+  });
+};
+
+const stopTask = ({ commit, state }, { id, stopTime }) => {
+  const task = state.tasks.find((items) => items.id === id);
+  const totalTime = task.totalTime + stopTime - task.startTime;
+
+  commit('editTask', {
+    id,
+    stopTime,
+    status: PAUSED,
+    totalTime,
+  });
+};
+
 export default {
   addTask,
   addTasks,
+  startTask,
+  stopTask,
 };

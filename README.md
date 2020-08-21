@@ -3,8 +3,6 @@
 Lightweight timetracker for your daily tasks
 
 ## TODOs
-* Start/pause/stop operations
-* Add TimeCounter component
 * Add 'original estimate' & 'time spent' fields to tasks
 * Add task by 'enter' key code
 * Display current date & time

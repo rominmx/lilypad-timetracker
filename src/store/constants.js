@@ -10,7 +10,9 @@ export const PRIORITIES_MAP = new Map([
 export const DEFAULT_TASK_VALUES = {
   status: PAUSED,
   comment: '',
+  startTime: null,
   stopTime: null,
+  totalTime: 0,
   category: null,
   priority: DEFAULT_PRIORITY,
 };

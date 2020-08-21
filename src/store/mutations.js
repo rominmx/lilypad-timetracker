@@ -11,13 +11,12 @@ const deleteTask = (state, id) => {
 };
 
 const editTask = (state, task) => {
-  state.tasks = state.tasks.filter((item) => {
+  state.tasks = state.tasks.map((item) => {
     if (item.id !== task.id) return item;
 
     return {
       ...item,
       ...task,
-      id: task.id,
     };
   });
 };
