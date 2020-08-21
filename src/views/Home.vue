@@ -95,9 +95,8 @@ export default {
       });
       this.saveTasks();
     },
-    editCurrentTask({
-      status, id, title, totalTime,
-    }) {
+    // eslint-disable-next-line
+    editCurrentTask({ status, id, title, totalTime }) {
       this.currentTask.status = status;
       this.currentTask.id = id;
       this.currentTask.title = title;
