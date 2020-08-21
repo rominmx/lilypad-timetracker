@@ -75,14 +75,16 @@ export default {
 }
 
 .container {
+  --position: 3vw;
+
   border: 2px solid #000;
   padding: 2vw;
   position: fixed;
   background-color: #fff;
-  left: 2vw;
-  top: 2vw;
-  right: 2vw;
-  bottom: 2vw;
+  left: var(--position);
+  top: var(--position);
+  right: var(--position);
+  bottom: var(--position);
   display: flex;
   flex-direction: column;
   justify-content: center;
