@@ -1,19 +1,31 @@
 .container {
-  border-color: #000;
   border-style: solid;
   font-family: var(--font);
+  border-color: #000;
   color: #000;
   background-color: transparent;
   border-radius: 0;
   cursor: pointer;
   line-height: 1;
   padding: .4em 1.2em;
+  text-align: center;
 
   &:hover,
   &:active {
     background-color: #000;
     border-color: #000;
     color: #fff;
+  }
+
+  &[disabled] {
+    opacity: .7;
+    cursor: not-allowed;
+
+    &:hover {
+      border-color: #000;
+      color: #000;
+      background-color: transparent;
+    }
   }
 }
 

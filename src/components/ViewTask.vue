@@ -1,5 +1,5 @@
 <template>
-  <div :class="$style.container">
+  <div :class="$style.container" @dblclick="stop">
     <div :class="$style.time">{{ displayTime | formatTime }}</div>
     <h3 :class="$style.title">{{ title }}</h3>
     <button :class="[$button.container, $button.large, $style.button]" @click="stop">
@@ -78,7 +78,7 @@ export default {
 }
 
 .button {
-  font-size: 5vw;
+  font-size: 4vw;
 }
 </style>
 

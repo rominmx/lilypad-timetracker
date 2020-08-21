@@ -3,10 +3,10 @@
 Lightweight timetracker for your daily tasks
 
 ## TODOs
+* Confirmation dialog between delete
 * Add 'original estimate' & 'time spent' fields to tasks
 * Add task by 'enter' key code
 * Display current date & time
-* Confirmation dialog between delete
 * Add tasks categories
 * Add task edit dialog
 * Add sorting to the tasks table

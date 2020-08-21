@@ -8,20 +8,30 @@
       Add New Task
     </button>
     <div v-if="taskIsAdding" :class="$style.container">
-      <button @click="closeUI">Close</button>
-      <div>
-        <label>Task Name</label>
-        <input v-model="taskName" />
-        <button :disabled="taskName.trim() === ''" @click="addTask">
-          Add Task
-        </button>
-      </div>
-      <div>
-        <label>Priority</label>
-        <div v-for="key in priorites.keys()" :key="key">
+      <button @click="closeUI" :class="$style.close">
+        <svg :class="$style.icon">
+          <use xlink:href="#icon_close" />
+        </svg>
+      </button>
+      <input v-model="taskName" :class="[$form.input, $style.input]" placeholder="Task name" />
+      <div :class="$radio.container">
+        <div
+          v-for="key in priorites.keys()"
+          :key="key"
+          :class="[$radio.radio, { [$radio.selected]: priority === key }]"
+        >
           <input type="radio" v-model="priority" :value="key" :id="`priority_${key}`" />
           <label :for="`priority_${key}`">{{ priorites.get(key) }}</label>
         </div>
+      </div>
+      <div>
+        <button
+          :disabled="taskName.trim() === ''"
+          :class="[$button.container, $style.addButton]"
+          @click="addTask"
+        >
+          Add Task
+        </button>
       </div>
     </div>
   </div>
@@ -65,11 +75,55 @@ export default {
 }
 
 .container {
-  width: 800px;
-  border: 1px solid #000;
-  padding: 36px;
-  margin-top: 36px;
+  border: 2px solid #000;
+  padding: 2vw;
+  position: fixed;
+  background-color: #fff;
+  left: 2vw;
+  top: 2vw;
+  right: 2vw;
+  bottom: 2vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.close {
+  position: absolute;
+  right: 1vw;
+  top: 1vw;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  width: 3vh;
+  height: 3vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:active {
+    outline: 2px dotted #000;
+  }
+}
+
+.icon {
+  fill: #000;
+  width: 2.5vh;
+  height: 2.5vh;
+}
+
+.addButton {
+  font-size: 3vw;
+}
+
+.input {
+  font-size: 3vw;
+  width: 100%;
 }
 </style>
 
+<style lang="scss" src="../stylesheets/radio.scss" module="$radio" />
 <style lang="scss" src="../stylesheets/buttons.scss" module="$button" />
+<style lang="scss" src="../stylesheets/forms.scss" module="$form" />
