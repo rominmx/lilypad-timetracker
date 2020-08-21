@@ -1,0 +1,22 @@
+.container {
+  border-color: #000;
+  border-style: solid;
+  font-family: var(--font);
+  color: #000;
+  background-color: transparent;
+  border-radius: 0;
+  cursor: pointer;
+  line-height: 1;
+  padding: .4em 1.2em;
+
+  &:hover,
+  &:active {
+    background-color: #000;
+    border-color: #000;
+    color: #fff;
+  }
+}
+
+.large {
+  border-width: 4px;
+}
