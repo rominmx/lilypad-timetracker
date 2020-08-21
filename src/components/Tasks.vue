@@ -1,6 +1,8 @@
 <template>
   <div>
-    <div v-if="!tasks.length">No tasks yet</div>
+    <div v-if="!tasks.length" :class="$style.infoMessage">
+      You have not added any tasks yet. Wanna add one?
+    </div>
     <div v-else>
       <table :class="$style.table">
         <thead>
@@ -67,6 +69,11 @@ export default {
 </script>
 
 <style lang="scss" module>
+.infoMessage {
+  font-size: 4vw;
+  margin-bottom: 1em;
+}
+
 .table {
   border-collapse: collapse;
   width: 800px;

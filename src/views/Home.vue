@@ -1,6 +1,5 @@
 <template>
-  <div>
-    <h1>Tasks</h1>
+  <div :class="$style.container">
     <tasks-list
       :tasks="tasks"
       @deleteTask="deleteTask"
@@ -105,3 +104,12 @@ export default {
   },
 };
 </script>
+
+<style module>
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+</style>

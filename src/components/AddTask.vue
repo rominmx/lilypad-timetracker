@@ -1,6 +1,10 @@
 <template>
   <div>
-    <button :disabled="taskIsAdding" @click="displayUI(true)">
+    <button
+      :disabled="taskIsAdding"
+      :class="[$button.container, $style.button]"
+      @click="displayUI(true)"
+    >
       Add New Task
     </button>
     <div v-if="taskIsAdding" :class="$style.container">
@@ -56,6 +60,10 @@ export default {
 </script>
 
 <style lang="scss" module>
+.button {
+  font-size: 3vw;
+}
+
 .container {
   width: 800px;
   border: 1px solid #000;
@@ -63,3 +71,5 @@ export default {
   margin-top: 36px;
 }
 </style>
+
+<style lang="scss" src="../stylesheets/buttons.scss" module="$button" />
