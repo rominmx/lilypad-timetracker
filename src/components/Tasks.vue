@@ -1,17 +1,17 @@
 <template>
-  <div>
+  <div :class="$style.container">
     <div v-if="!tasks.length" :class="$style.infoMessage">
-      You have not added any tasks yet. Wanna add one?
+      You have not added any tasks yet.<br />
+      Wanna add one?
     </div>
-    <div v-else>
+    <template v-else>
       <table :class="$style.table">
         <thead>
           <tr>
             <th>#</th>
-            <th>Task</th>
+            <th :class="$style.title">Task</th>
             <th>Actions</th>
             <th>Time</th>
-            <th>Status</th>
             <th>Priority</th>
             <th>Delete</th>
           </tr>
@@ -19,7 +19,7 @@
         <tbody>
           <tr v-for="(task, index) in tasks" :key="task.id">
             <td>{{ index + 1 }}</td>
-            <td>{{ task.title }}</td>
+            <td :class="$style.title">{{ task.title }}</td>
             <td>
               <button
                 @click="
@@ -30,7 +30,6 @@
               </button>
             </td>
             <td>{{ task.totalTime | formatTime }}</td>
-            <td>{{ task.status }}</td>
             <td>{{ task.priority | getPriority }}</td>
             <td>
               <button @click="$emit('deleteTask', task.id)">Delete</button>
@@ -38,9 +37,9 @@
           </tr>
         </tbody>
       </table>
-      <div>Total time: {{ totalTime | formatTime }}</div>
+      <div :class="$style.total">Total time: {{ totalTime | formatTime }}</div>
       <button @click="$emit('clearAll')">Clear All Tasks</button>
-    </div>
+    </template>
   </div>
 </template>
 
@@ -69,19 +68,45 @@ export default {
 </script>
 
 <style lang="scss" module>
+.container {
+  width: 100%;
+}
+
 .infoMessage {
   font-size: 4vw;
   margin-bottom: 1em;
+  text-align: center;
 }
 
 .table {
   border-collapse: collapse;
-  width: 800px;
+  width: 100%;
   margin-bottom: 24px;
+
+  th {
+    padding: 0.5em 0.6em;
+    text-align: left;
+  }
 
   th,
   td {
     border: 1px solid #000;
+    font-size: 36px;
   }
+
+  td {
+    padding: 0.8em 0.6em;
+  }
+}
+
+.title {
+  width: 45%;
+}
+
+.total {
+  font-size: 48px;
+  text-align: center;
+  margin-top: 1em;
+  margin-bottom: 1em;
 }
 </style>

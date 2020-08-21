@@ -72,6 +72,7 @@ export default {
 
 .title {
   font-size: 6vw;
+  font-weight: 400;
   line-height: 1;
   margin-top: 0.5em;
   text-align: center;
