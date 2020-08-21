@@ -13,3 +13,4 @@ Lightweight timetracker for your daily tasks
 * Add i18n support
 * Archive tasks
 * Copy selected tasks from previous day
+* Themes support

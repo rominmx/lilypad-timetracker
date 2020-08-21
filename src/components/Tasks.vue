@@ -24,7 +24,7 @@
                   $emit('startTask', { id: task.id, title: task.title, totalTime: task.totalTime })
                 "
               >
-                Start
+                {{ task.totalTime ? 'Continue' : 'Start' }}
               </button>
             </td>
             <td>{{ task.totalTime | formatTime }}</td>
@@ -36,12 +36,14 @@
           </tr>
         </tbody>
       </table>
+      <div>Total time: {{ totalTime | formatTime }}</div>
       <button @click="$emit('clearAll')">Clear All Tasks</button>
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import { PRIORITIES_MAP } from '@/store/constants';
 import { formatTime } from '@/utils/time';
 
@@ -57,6 +59,9 @@ export default {
       type: Array,
       required: true,
     },
+  },
+  computed: {
+    ...mapGetters(['totalTime']),
   },
 };
 </script>
