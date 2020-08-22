@@ -16,29 +16,32 @@
           <td>{{ index + 1 }}</td>
           <td :class="$style.title">{{ task.title }}</td>
           <td>
-            <button
+            <action-button
               @click="
                 $emit('startTask', { id: task.id, title: task.title, totalTime: task.totalTime })
               "
+              :class="$style.button"
             >
               {{ task.totalTime ? 'Continue' : 'Start' }}
-            </button>
+            </action-button>
           </td>
           <td>{{ task.totalTime | formatTime }}</td>
           <td>{{ task.priority | getPriority }}</td>
           <td>
-            <button @click="$emit('deleteTask', task.id)">Delete</button>
+            <action-button @click="$emit('deleteTask', task.id)" :class="$style.button"
+              >Delete</action-button
+            >
           </td>
         </tr>
       </tbody>
     </table>
     <div :class="$style.total">Total time: {{ totalTime | formatTime }}</div>
-    <button @click="$emit('clearAll')">Clear All Tasks</button>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
+import ActionButton from '@/components/ActionButton.vue';
 import { PRIORITIES_MAP } from '@/store/constants';
 import { formatTime } from '@/utils/time';
 
@@ -48,6 +51,9 @@ export default {
       return PRIORITIES_MAP.get(value);
     },
     formatTime,
+  },
+  components: {
+    ActionButton,
   },
   props: {
     tasks: {
@@ -85,6 +91,10 @@ export default {
   td {
     padding: 0.8em 0.6em;
   }
+}
+
+.button {
+  font-size: 36px;
 }
 
 .title {

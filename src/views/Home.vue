@@ -1,23 +1,28 @@
 <template>
   <div :class="$style.container">
-    <tasks-list
-      v-if="tasks.length"
-      :tasks="tasks"
-      @deleteTask="deleteTask"
-      @startTask="startTask"
-      @clearAll="clearAll"
-    />
-    <div v-else :class="$style.message">
-      You have not added any tasks yet.<br />
-      Wanna add one?
+    <div :class="$style.content">
+      <tasks-list
+        v-if="tasks.length"
+        :tasks="tasks"
+        @deleteTask="deleteTask"
+        @startTask="startTask"
+        @clearAll="clearAll"
+      />
+      <div v-else :class="$style.message">
+        You have not added any tasks yet.<br />
+        Wanna add one?
+      </div>
+      <button
+        :disabled="taskIsAdding"
+        :class="[$button.container, $style.addButton]"
+        @click="showAddTaskDialog(true)"
+      >
+        Add New Task
+      </button>
     </div>
-    <button
-      :disabled="taskIsAdding"
-      :class="[$button.container, $style.addButton]"
-      @click="showAddTaskDialog(true)"
-    >
-      Add New Task
-    </button>
+    <div v-if="tasks.length" :class="$style.footer">
+      <action-button @click="clearAll" :class="$style.clearButton">Clear All Tasks</action-button>
+    </div>
     <add-task v-if="taskIsAdding" @addTask="addTask" @close="showAddTaskDialog(false)" />
     <view-task
       v-if="taskIsRunning"
@@ -33,11 +38,13 @@ import { mapState } from 'vuex';
 import TasksList from '@/components/Tasks.vue';
 import AddTask from '@/components/AddTask.vue';
 import ViewTask from '@/components/ViewTask.vue';
+import ActionButton from '@/components/ActionButton.vue';
 import { RUNNING, PAUSED } from '@/store/constants';
 
 export default {
   name: 'Home',
   components: {
+    ActionButton,
     AddTask,
     TasksList,
     ViewTask,
@@ -126,9 +133,29 @@ export default {
 .container {
   display: flex;
   flex-direction: column;
+  min-height: 100%;
+  width: 100%;
+  align-items: center;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  flex-grow: 1;
+  padding-top: 2vw;
+  padding-bottom: 2vw;
   width: 80%;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding-top: 2vw;
+  padding-bottom: 2vw;
 }
 
 .message {
@@ -139,6 +166,10 @@ export default {
 
 .addButton {
   font-size: 3vw;
+}
+
+.clearButton {
+  font-size: 2vw;
 }
 </style>
 
