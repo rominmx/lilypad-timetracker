@@ -1,45 +1,39 @@
 <template>
   <div :class="$style.container">
-    <div v-if="!tasks.length" :class="$style.infoMessage">
-      You have not added any tasks yet.<br />
-      Wanna add one?
-    </div>
-    <template v-else>
-      <table :class="$style.table">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th :class="$style.title">Task</th>
-            <th>Actions</th>
-            <th>Time</th>
-            <th>Priority</th>
-            <th>Delete</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(task, index) in tasks" :key="task.id">
-            <td>{{ index + 1 }}</td>
-            <td :class="$style.title">{{ task.title }}</td>
-            <td>
-              <button
-                @click="
-                  $emit('startTask', { id: task.id, title: task.title, totalTime: task.totalTime })
-                "
-              >
-                {{ task.totalTime ? 'Continue' : 'Start' }}
-              </button>
-            </td>
-            <td>{{ task.totalTime | formatTime }}</td>
-            <td>{{ task.priority | getPriority }}</td>
-            <td>
-              <button @click="$emit('deleteTask', task.id)">Delete</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <div :class="$style.total">Total time: {{ totalTime | formatTime }}</div>
-      <button @click="$emit('clearAll')">Clear All Tasks</button>
-    </template>
+    <table :class="$style.table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th :class="$style.title">Task</th>
+          <th>Actions</th>
+          <th>Time</th>
+          <th>Priority</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(task, index) in tasks" :key="task.id">
+          <td>{{ index + 1 }}</td>
+          <td :class="$style.title">{{ task.title }}</td>
+          <td>
+            <button
+              @click="
+                $emit('startTask', { id: task.id, title: task.title, totalTime: task.totalTime })
+              "
+            >
+              {{ task.totalTime ? 'Continue' : 'Start' }}
+            </button>
+          </td>
+          <td>{{ task.totalTime | formatTime }}</td>
+          <td>{{ task.priority | getPriority }}</td>
+          <td>
+            <button @click="$emit('deleteTask', task.id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div :class="$style.total">Total time: {{ totalTime | formatTime }}</div>
+    <button @click="$emit('clearAll')">Clear All Tasks</button>
   </div>
 </template>
 
@@ -70,12 +64,6 @@ export default {
 <style lang="scss" module>
 .container {
   width: 100%;
-}
-
-.infoMessage {
-  font-size: 4vw;
-  margin-bottom: 1em;
-  text-align: center;
 }
 
 .table {

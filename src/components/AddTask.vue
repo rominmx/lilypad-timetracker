@@ -1,42 +1,33 @@
 <template>
   <div>
-    <button
-      :disabled="taskIsAdding"
-      :class="[$button.container, $style.button]"
-      @click="displayUI(true)"
-    >
-      Add New Task
-    </button>
-    <template v-if="taskIsAdding">
-      <div :class="$style.overlay" @click="closeUI"></div>
-      <div :class="$style.container">
-        <button @click="closeUI" :class="$style.close">
-          <svg :class="$style.icon">
-            <use xlink:href="#icon_close" />
-          </svg>
-        </button>
-        <input v-model="taskName" :class="[$form.input, $style.input]" placeholder="Task name" />
-        <div :class="$radio.container">
-          <div
-            v-for="key in priorites.keys()"
-            :key="key"
-            :class="[$radio.radio, { [$radio.selected]: priority === key }]"
-          >
-            <input type="radio" v-model="priority" :value="key" :id="`priority_${key}`" />
-            <label :for="`priority_${key}`">{{ priorites.get(key) }}</label>
-          </div>
-        </div>
-        <div>
-          <button
-            :disabled="taskName.trim() === ''"
-            :class="[$button.container, $style.addButton]"
-            @click="addTask"
-          >
-            Add Task
-          </button>
+    <div :class="$style.overlay" @click="close"></div>
+    <div :class="$style.container">
+      <button @click="close" :class="$style.close">
+        <svg :class="$style.icon">
+          <use xlink:href="#icon_close" />
+        </svg>
+      </button>
+      <input v-model="taskName" :class="[$form.input, $style.input]" placeholder="Task name" />
+      <div :class="$radio.container">
+        <div
+          v-for="key in priorites.keys()"
+          :key="key"
+          :class="[$radio.radio, { [$radio.selected]: priority === key }]"
+        >
+          <input type="radio" v-model="priority" :value="key" :id="`priority_${key}`" />
+          <label :for="`priority_${key}`">{{ priorites.get(key) }}</label>
         </div>
       </div>
-    </template>
+      <div>
+        <button
+          :disabled="taskName.trim() === ''"
+          :class="[$button.container, $style.addButton]"
+          @click="addTask"
+        >
+          Add Task
+        </button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -46,37 +37,30 @@ import { PRIORITIES_MAP, DEFAULT_PRIORITY } from '../store/constants';
 export default {
   data() {
     return {
-      taskIsAdding: false,
       taskName: '',
       priority: DEFAULT_PRIORITY,
       priorites: PRIORITIES_MAP,
     };
   },
+  beforeDestroy() {
+    this.taskName = '';
+    this.priority = DEFAULT_PRIORITY;
+  },
   methods: {
-    displayUI(flag) {
-      this.taskIsAdding = flag;
-    },
-    closeUI() {
-      this.displayUI(false);
-      this.taskName = '';
-      this.priority = DEFAULT_PRIORITY;
+    close() {
+      this.$emit('close');
     },
     addTask() {
       this.$emit('addTask', {
         title: this.taskName,
         priority: this.priority,
       });
-      this.closeUI();
     },
   },
 };
 </script>
 
 <style lang="scss" module>
-.button {
-  font-size: 3vw;
-}
-
 .overlay {
   background-color: #000;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%23ffffff' fill-opacity='1' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");

@@ -1,14 +1,26 @@
 <template>
   <div :class="$style.container">
     <tasks-list
+      v-if="tasks.length"
       :tasks="tasks"
       @deleteTask="deleteTask"
       @startTask="startTask"
       @clearAll="clearAll"
     />
-    <add-task @addTask="addTask" />
+    <div v-else :class="$style.message">
+      You have not added any tasks yet.<br />
+      Wanna add one?
+    </div>
+    <button
+      :disabled="taskIsAdding"
+      :class="[$button.container, $style.addButton]"
+      @click="showAddTaskDialog(true)"
+    >
+      Add New Task
+    </button>
+    <add-task v-if="taskIsAdding" @addTask="addTask" @close="showAddTaskDialog(false)" />
     <view-task
-      v-if="taskRunning"
+      v-if="taskIsRunning"
       :title="currentTask.title"
       :total-time="currentTask.totalTime"
       @stop="stopTask"
@@ -38,11 +50,12 @@ export default {
         title: 0,
         totalTime: 0,
       },
+      taskIsAdding: false,
     };
   },
   computed: {
     ...mapState(['tasks']),
-    taskRunning() {
+    taskIsRunning() {
       return this.currentTask.status === RUNNING;
     },
   },
@@ -59,8 +72,12 @@ export default {
 
       localStorage.setItem('tasks', stringifiedTasks);
     },
+    showAddTaskDialog(flag) {
+      this.taskIsAdding = flag;
+    },
     addTask(params) {
       this.$store.dispatch('addTask', params);
+      this.showAddTaskDialog(false);
       this.saveTasks();
     },
     deleteTask(params) {
@@ -113,4 +130,16 @@ export default {
   justify-content: center;
   width: 80%;
 }
+
+.message {
+  font-size: 4vw;
+  margin-bottom: 1em;
+  text-align: center;
+}
+
+.addButton {
+  font-size: 3vw;
+}
 </style>
+
+<style lang="scss" src="../stylesheets/buttons.scss" module="$button" />
