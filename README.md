@@ -4,8 +4,6 @@ Lightweight timetracker for your daily tasks
 
 ## TODOs
 * Confirmation dialog between delete
-* Set focus in AddTask popup component
-* Separate popup & button in AddTask component
 * Implement running in background 
 * Add 'original estimate' & 'time spent' fields to tasks
 * Add task by 'enter' key code
