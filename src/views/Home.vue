@@ -93,6 +93,12 @@ export default {
     if (Array.isArray(parsedTasks)) {
       this.$store.dispatch('addTasks', parsedTasks);
     }
+
+    window.addEventListener('unload', () => {
+      if (this.currentTask.status === RUNNING) {
+        this.stopTask();
+      }
+    });
   },
   methods: {
     saveTasks() {

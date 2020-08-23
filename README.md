@@ -17,6 +17,5 @@ Lightweight timetracker for your daily tasks
 * Add i18n support
 * Archive tasks
 * Copy selected tasks from previous day
-* Save running task on unload event
 * Add Archive & Backlog pages for completed and saved for later tasks respectively
 * Themes support
