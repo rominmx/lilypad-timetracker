@@ -30,6 +30,12 @@
       :total-time="currentTask.totalTime"
       @stop="stopTask"
     />
+    <confirmation-dialog
+      v-if="dialog.visible"
+      :message="dialog.message"
+      @cancel="dialogCancel"
+      @continue="dialogContinue"
+    />
   </div>
 </template>
 
@@ -39,13 +45,22 @@ import TasksList from '@/components/Tasks.vue';
 import AddTask from '@/components/AddTask.vue';
 import ViewTask from '@/components/ViewTask.vue';
 import ActionButton from '@/components/ActionButton.vue';
+import ConfirmationDialog from '@/components/ConfirmationDialog.vue';
 import { RUNNING, PAUSED } from '@/store/constants';
+
+const DELETE_TASK = 'deleteTask';
+const CLEAR_ALL = 'clearAll';
+const MESSAGES = {
+  [DELETE_TASK]: 'You\`re gonna delete this task. Continue?', // eslint-disable-line
+  [CLEAR_ALL]: 'You\`re gonna permanently remove all tasks. Proceed?', // eslint-disable-line
+};
 
 export default {
   name: 'Home',
   components: {
     ActionButton,
     AddTask,
+    ConfirmationDialog,
     TasksList,
     ViewTask,
   },
@@ -58,6 +73,12 @@ export default {
         totalTime: 0,
       },
       taskIsAdding: false,
+      dialog: {
+        type: null,
+        visible: false,
+        message: '',
+        id: null,
+      },
     };
   },
   computed: {
@@ -87,13 +108,18 @@ export default {
       this.showAddTaskDialog(false);
       this.saveTasks();
     },
-    deleteTask(params) {
-      this.$store.commit('deleteTask', params);
-      this.saveTasks();
+    deleteTask(id) {
+      this.setCurrentDialog({
+        type: DELETE_TASK,
+        message: MESSAGES[DELETE_TASK],
+      });
+      this.dialog.id = id;
     },
     clearAll() {
-      this.$store.commit('setTasks', []);
-      this.saveTasks();
+      this.setCurrentDialog({
+        type: CLEAR_ALL,
+        message: MESSAGES[CLEAR_ALL],
+      });
     },
     startTask({ id, title, totalTime }) {
       const startTime = new Date().getTime();
@@ -124,6 +150,29 @@ export default {
       this.currentTask.id = id;
       this.currentTask.title = title;
       this.currentTask.totalTime = totalTime;
+    },
+    setCurrentDialog({ type, message }) {
+      this.dialog.visible = true;
+      this.dialog.type = type;
+      this.dialog.message = message;
+    },
+    dialogCancel() {
+      this.dialog.visible = false;
+      this.dialog.message = '';
+      this.dialog.type = null;
+      this.dialog.id = null;
+    },
+    dialogContinue() {
+      if (this.dialog.type === CLEAR_ALL) {
+        this.$store.commit('setTasks', []);
+      }
+
+      if (this.dialog.type === DELETE_TASK) {
+        this.$store.commit('deleteTask', this.dialog.id);
+      }
+
+      this.saveTasks();
+      this.dialogCancel();
     },
   },
 };

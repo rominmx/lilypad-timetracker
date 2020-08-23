@@ -1,6 +1,6 @@
 <template>
-  <div :class="$style.container">
-    <div :class="$style.overlay" @click="close"></div>
+  <div :class="$dialog.container">
+    <div :class="$dialog.overlay" @click="close"></div>
     <div :class="$style.dialogContainer">
       <button @click="close" :class="$style.close">
         <svg :class="$style.icon">
@@ -69,30 +69,6 @@ export default {
 </script>
 
 <style lang="scss" module>
-.container {
-  position: fixed;
-  z-index: 10;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.overlay {
-  background-color: #000;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%23ffffff' fill-opacity='1' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
-  opacity: 0.75;
-  position: absolute;
-  z-index: 1;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-}
-
 .dialogContainer {
   width: 60%;
   border: 2px solid #000;
@@ -144,3 +120,4 @@ export default {
 <style lang="scss" src="../stylesheets/radio.scss" module="$radio" />
 <style lang="scss" src="../stylesheets/buttons.scss" module="$button" />
 <style lang="scss" src="../stylesheets/forms.scss" module="$form" />
+<style lang="scss" src="../stylesheets/dialogs.scss" module="$dialog" />
