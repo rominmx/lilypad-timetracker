@@ -3,6 +3,7 @@
 Lightweight timetracker for your daily tasks
 
 ## TODOs
+* Add typescript support
 * Display title overview on Tasks component
 * Responsive version
 * Try pattern background on buttons
