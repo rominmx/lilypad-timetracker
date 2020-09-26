@@ -1,6 +1,12 @@
+import { Commit } from 'vuex';
+import { State, ITask, MutationType } from '@/models/types';
+
 import { DEFAULT_TASK_VALUES, RUNNING, PAUSED } from './constants';
 
-const addTask = ({ commit }, { title, priority }) => {
+const addTask = (
+  { commit }: { commit: Commit },
+  { title, priority }: Pick<ITask, 'title' | 'priority'>,
+) => {
   const id = new Date().getTime();
 
   commit('addTask', {
@@ -12,7 +18,7 @@ const addTask = ({ commit }, { title, priority }) => {
 };
 
 // Validates & adds tasks to the store
-const addTasks = ({ commit }, tasks) => {
+const addTasks = ({ commit }: { commit: Commit }, tasks: Array<ITask>) => {
   const validatedTasks = tasks
     .filter((task) => {
       const { id, title } = task;
@@ -30,7 +36,10 @@ const addTasks = ({ commit }, tasks) => {
   commit('setTasks', validatedTasks);
 };
 
-const startTask = ({ commit }, { id, startTime }) => {
+const startTask = (
+  { commit }: { commit: Commit },
+  { id, startTime }: Pick<ITask, 'id' | 'startTime'>,
+) => {
   commit('editTask', {
     id,
     startTime,
@@ -38,8 +47,20 @@ const startTask = ({ commit }, { id, startTime }) => {
   });
 };
 
-const stopTask = ({ commit, state }, { id, stopTime }) => {
+const stopTask = (
+  { commit, state }: { commit: Commit, state: State },
+  { id, stopTime }: { id: number, stopTime: number },
+) => {
   const task = state.tasks.find((items) => items.id === id);
+
+  if (task === undefined) {
+    throw new Error('Cannot find task by id');
+  }
+
+  if (task.startTime === null) {
+    throw new Error('Task wasn\'t started');
+  }
+
   const totalTime = task.totalTime + stopTime - task.startTime;
 
   commit('editTask', {

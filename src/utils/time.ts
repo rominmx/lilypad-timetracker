@@ -1,4 +1,4 @@
-export const addZero = (value) => {
+export const addZero = (value: number): string => {
   const str = String(value);
 
   if (str.length > 2) {
@@ -9,10 +9,10 @@ export const addZero = (value) => {
     return `0${value}`;
   }
 
-  return value;
+  return String(value);
 };
 
-export const formatTime = (value) => {
+export const formatTime = (value: number): string => {
   const time = new Date(value);
   const seconds = time.getUTCSeconds();
   const minutes = time.getUTCMinutes();
