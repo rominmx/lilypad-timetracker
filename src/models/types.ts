@@ -22,3 +22,7 @@ export enum MutationType {
   DELETE_TASK = 'deleteTask',
   EDIT_TASK = 'editTask',
 }
+
+export enum GetterType {
+  TOTAL_TIME = 'totalTime',
+}
