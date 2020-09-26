@@ -1,12 +1,10 @@
 <template>
   <div :class="$dialog.container">
     <div :class="$dialog.overlay" @click="close"></div>
-    <div :class="$style.dialogContainer">
-      <button @click="close" :class="$style.close">
-        <svg :class="$style.icon">
-          <use xlink:href="#icon_close" />
-        </svg>
-      </button>
+    <form
+      :class="$style.dialogContainer"
+      @submit="addTask"
+    >
       <input
         ref="input"
         v-model="taskName"
@@ -24,20 +22,24 @@
         </div>
       </div>
       <div>
-        <button
+        <input
           :disabled="taskName.trim() === ''"
           :class="[$button.container, $style.addButton]"
-          @click="addTask"
-        >
-          Add Task
-        </button>
+          type="submit"
+          value="Add Task"
+        />
       </div>
-    </div>
+      <button @click="close" :class="$style.close">
+        <svg :class="$style.icon">
+          <use xlink:href="#icon_close" />
+        </svg>
+      </button>
+    </form>
   </div>
 </template>
 
 <script>
-import { PRIORITIES_MAP, DEFAULT_PRIORITY } from '../store/constants';
+import { PRIORITIES_MAP, DEFAULT_PRIORITY } from '@/store/constants';
 
 export default {
   data() {
